@@ -1,5 +1,12 @@
 import java.io.Serializable;
 
+/**
+ * Product object
+ *
+ * @author Simone Cullino
+ * @author Roger Ferrod
+ * @version 3.11
+ */
 public class Product implements Serializable {
 
     private String id;

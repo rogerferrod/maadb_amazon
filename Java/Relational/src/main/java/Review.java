@@ -1,3 +1,10 @@
+/**
+ * Review object
+ *
+ * @author Simone Cullino
+ * @author Roger Ferrod
+ * @version 3.11
+ */
 public class Review {
 
     private int id;

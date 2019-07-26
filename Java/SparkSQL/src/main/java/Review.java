@@ -1,5 +1,12 @@
 import java.io.Serializable;
 
+/**
+ * Review object
+ *
+ * @author Simone Cullino
+ * @author Roger Ferrod
+ * @version 3.11
+ */
 public class Review implements Serializable {
     private int id;
     private String reviewerName;

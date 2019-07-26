@@ -15,8 +15,20 @@ import scala.Tuple2;
 
 import java.util.*;
 
+/**
+ * Spark - Cluster
+ *
+ * @author Simone Cullino
+ * @author Roger Ferrod
+ * @version 3.1
+ */
 public final class Statistics {
 
+    /**
+     * Computes some statistics
+     *
+     * @param args[0] MongoDB router ip address
+     */
     public static void main(final String[] args) throws InterruptedException {
         if (args.length < 1) {
             throw new RuntimeException("Missing parameters");
@@ -35,7 +47,7 @@ public final class Statistics {
         // Create a JavaSparkContext using the SparkSession's SparkContext object
         JavaSparkContext jsc = new JavaSparkContext(spark.sparkContext());
 
-        // More application logic would go here...
+        // Application logic
         JavaMongoRDD<Document> reviews_rdd = MongoSpark.load(jsc);
 
         // Analyze data from MongoDB

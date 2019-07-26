@@ -11,8 +11,29 @@ import scala.Tuple2;
 import java.io.IOException;
 import java.util.*;
 
+/**
+ * SQL approach
+ * JDBC / Spark - Cluster
+ *
+ * @author Simone Cullino
+ * @author Roger Ferrod
+ * @version 3.11
+ */
 public class SparkSQL {
 
+    /**
+     * Applies VADER and computes Pearson index
+     * Reads data from Relational DBMS and writes results in new tables
+     *
+     * @param args[0] lexicon.txt file path
+     * @param args[1] emoticon.txt file path
+     * @param args[2] slang.txt file path
+     * @param args[3] modifier.txt file path
+     * @param args[4] negate.txt file path
+     * @param args[5] JDBC url (jdbc:postgresql://localhost:5432/maadb)
+     * @param args[6] DB user
+     * @param args[7] DB password
+     */
     public static void main(String[] args) throws IOException {
         String url = args[5];
         String user = args[6];

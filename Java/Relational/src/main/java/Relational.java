@@ -6,8 +6,30 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.math3.stat.correlation.PearsonsCorrelation;
 
+
+/**
+ * Relational approach
+ * JDBC only - Centralized server
+ *
+ * @author Simone Cullino
+ * @author Roger Ferrod
+ * @version 3.11
+ */
 public class Relational {
 
+    /**
+     * Applies VADER and computes Pearson index
+     * Reads data from Relational DBMS and writes results in new tables
+     *
+     * @param args[0] lexicon.txt file path
+     * @param args[1] emoticon.txt file path
+     * @param args[2] slang.txt file path
+     * @param args[3] modifier.txt file path
+     * @param args[4] negate.txt file path
+     * @param args[5] JDBC url (jdbc:postgresql://localhost:5432/rmaadb)
+     * @param args[6] DB user
+     * @param args[7] DB password
+     */
     public static void main(String[] args) throws IOException {
         System.out.println("Loading...");
         long start = System.currentTimeMillis();
@@ -33,7 +55,7 @@ public class Relational {
         int sizeTableReviews = db.sizeTable("reviews");
         int limit = DriverDB.cacheSize;
         for (int offset = 0; offset < sizeTableReviews; offset += limit) {
-            System.out.println("da " + offset + " a " + (offset + limit));
+            System.out.println("from " + offset + " to " + (offset + limit));
             Map<Product, ArrayList<Review>> groups = db.getReviewsGroupByProductsOffsetLimit(limit, offset);
             List<Product> products = new ArrayList<>(groups.keySet());
 
@@ -56,7 +78,7 @@ public class Relational {
                             x.add(overall);
                             y.add(tot);
                             scoreCount = scoreCount + tot;
-                        } // di DEFAULT è già null
+                        } // DEFAULT is null
                     } catch (IOException e) {
                         System.out.println(e.toString());
                     }

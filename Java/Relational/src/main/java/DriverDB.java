@@ -4,6 +4,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * DB Driver
+ * Provides methods to interact with DB
+ *
+ * @author Simone Cullino
+ * @author Roger Ferrod
+ * @version 3.11
+ */
 public class DriverDB {
 
     static final int cacheSize = 2000;
@@ -277,7 +285,7 @@ public class DriverDB {
             ArrayList<Review> temp;
             while (rs.next()) {
                 Product p = new Product(rs.getString("asin"), rs.getString("description"), rs.getString("prodTitle"));
-                if(result.containsKey(p)){
+                if (result.containsKey(p)) {
                     temp = result.get(p);
                 } else {
                     temp = new ArrayList<>();

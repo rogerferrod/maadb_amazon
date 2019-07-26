@@ -1,5 +1,12 @@
 import java.util.Objects;
 
+/**
+ * Product object
+ *
+ * @author Simone Cullino
+ * @author Roger Ferrod
+ * @version 3.11
+ */
 public class Product {
 
     private String id;
@@ -54,7 +61,7 @@ public class Product {
         return title != null;
     }
 
-    public boolean hasPolarityAVG(){
+    public boolean hasPolarityAVG() {
         return polarityAVG != null;
     }
 

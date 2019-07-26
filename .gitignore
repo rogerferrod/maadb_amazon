@@ -1,11 +1,2 @@
 *.pyc
 *.iml
-
-/output/*
-/input/*
-
-/Python/.idea/*
-/Python/loader/.idea/*
-/Python/loader/output/*
-
-/Relational_Backup_DB/*

@@ -11,7 +11,14 @@ import edu.stanford.nlp.util.logging.RedwoodConfiguration;
 import java.util.*;
 import java.util.stream.Collectors;
 
-
+/**
+ * VADER implementation
+ * CJ Hutto, E Gilbert, 2014
+ *
+ * @author Simone Cullino
+ * @author Roger Ferrod
+ * @version 3.11
+ */
 public class Vader {
 
     private List<String> sentences;
@@ -98,8 +105,7 @@ public class Vader {
     }
 
     private float evaluateVader() {
-        //valuto se frase è tutta minuscola o maiuscola
-        //capDifference = se true ci sono parole sia maiuscole che minuscole
+        //capDifference = se true if there is uppercase and lowercase words
         int countUpperWord = 0;
         for (String token : tokens) {
             if (isUpperWord(token)) {
@@ -115,7 +121,7 @@ public class Vader {
 
         for (int i = 0; i < tokens.size(); i++) {
             float score = 0.0f;
-            if (!modifier.containsKey(tokens.get(i))) { //se tokens non è un modificatore
+            if (!modifier.containsKey(tokens.get(i))) { //if token is not a modifier
                 /* LEXICON */
                 String tokenLow = tokens.get(i).toLowerCase();
                 Float lexValue = lexicon.get(tokenLow);
@@ -132,7 +138,6 @@ public class Vader {
                     }
 
                     /* TRIGRAM HEURISTIC */
-                    //Trigram Evaluation modica la valenza della parola andando a considerare fino ad un massimo di 3 parole precedenti
                     for (int j = 0; j < 3; j++) {
                         if (i > j && !lexicon.containsKey(tokens.get(i - (j + 1)).toLowerCase())) {
                             float scalar = scalarIncDec(tokens.get(i - (j + 1)), score, isCapDifference);
@@ -249,10 +254,9 @@ public class Vader {
         }
         if (j == 1) {
             if (tokenLowers.get(i - 2).equals("never") && (tokenLowers.get(i - 1).equals("so") || tokenLowers.get(i - 1).equals("this"))) {
-                // 1 word preceding lexicon word (w/o stopwords)
                 score *= 1.25f;
             } else if (tokenLowers.get(i - 2).equals("without") && tokenLowers.get(i - 1).equals("doubt")) {
-                score = score; //ummmm
+                score = score;
             } else if (negated(tokenLowers.get(i - (j + 1)))) {
                 // 2 words preceding the lexicon word position
                 score = score * NEG_SCALAR;
@@ -262,7 +266,7 @@ public class Vader {
             if (tokenLowers.get(i - 3).equals("never") && (tokenLowers.get(i - 2).equals("so") || tokenLowers.get(i - 2).equals("this")) || (tokenLowers.get(i - 1).equals("so") || tokenLowers.get(i - 1).equals("this"))) {
                 score *= 1.25f;
             } else if (tokenLowers.get(i - 3).equals("without") && (tokenLowers.get(i - 2).equals("doubt") || tokenLowers.get(i - 1).equals("doubt"))) {
-                score = score; //ummm
+                score = score;
             } else if (negated(tokenLowers.get(i - (j + 1)))) {
                 // 3 words preceding the lexicon word position
                 score *= NEG_SCALAR;
@@ -285,17 +289,17 @@ public class Vader {
             if (score < 0) {
                 scalar *= -1;
             }
-            if (isUpperWord(word) && cap_difference) {//se parola è tutta maiuscola e ho parole maiuscole e minuscole nel testo
-                if (score > 0) //se è parola positiva aumento positività
+            if (isUpperWord(word) && cap_difference) {
+                if (score > 0)
                     scalar += CAP_SCALAR;
-                else //altrimenti aumento negatività
+                else
                     scalar -= CAP_SCALAR;
             }
         }
         return scalar;
     }
 
-    private boolean isUpperWord(String word) {//se ritorna false --> parola non è tutta maiuscola
+    private boolean isUpperWord(String word) {
         boolean res = true;
         for (char c : word.toCharArray()) {
             if (Character.isLetter(c) && !Character.isUpperCase(c)) {
@@ -335,8 +339,6 @@ public class Vader {
     }
 
     public float evaluate() {
-        //elaboro le frasi/frase
-
         RedwoodConfiguration.current().clear().apply(); //disable logging
 
         if (this.sentences == null) {
@@ -347,7 +349,6 @@ public class Vader {
         float polarity;
         for (String sent : sentences) {
             polarity = computeScore(sent);
-            //System.out.println("FRASE : " + sent + " PUNTEGGIO : " + polarity);
             tot += polarity;
 
             tokens.clear();

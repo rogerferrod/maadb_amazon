@@ -19,7 +19,27 @@ import org.apache.spark.mllib.stat.Statistics;
 import java.io.IOException;
 import java.util.*;
 
+/**
+ * NoSQL approach
+ * MongoDB / Spark - Cluster
+ *
+ * @author Simone Cullino
+ * @author Roger Ferrod
+ * @version 3.11
+ */
 public class SparkNoSQL {
+
+    /**
+     * Applies VADER and computes Pearson index
+     * Reads data from MongoDB cluster and writes results in new collections
+     *
+     * @param args[0] MongoDB router ip address
+     * @param args[1] lexicon.txt file path
+     * @param args[2] emoticon.txt file path
+     * @param args[3] slang.txt file path
+     * @param args[4] modifier.txt file path
+     * @param args[5] negate.txt file path
+     */
     public static void main(final String[] args) throws IOException {
         if (args.length < 1) {
             throw new RuntimeException("Missing parameters");
